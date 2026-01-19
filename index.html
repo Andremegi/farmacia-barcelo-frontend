@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="connect-src https://farmaciabarcelo.duckdns.org;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://farmaciabarcelo.duckdns.org https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https://farmaciabarcelo.duckdns.org; img-src 'self' data: https:; frame-src 'self' https:;">
   <meta name="robots" content="index, follow">
   <meta name="description" content="Pedidos online Farmacia Barceló - Calle Mejia Lequerica 3, Madrid">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -799,7 +799,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
     }
 
     // Función para obtener los datos de contacto
-    function obtenerDatosContacto() {
+   /** function obtenerDatosContacto() {
         const medioSeleccionado = document.querySelector('input[name="medioContacto"]:checked');
 
         if (!medioSeleccionado) return null;
@@ -819,7 +819,44 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
         }
 
         return null;
+    }*/
+  // REEMPLAZA la función obtenerDatosContacto con esta versión corregida:
+function obtenerDatosContacto() {
+    const medioSeleccionado = document.querySelector('input[name="medioContacto"]:checked');
+    
+    if (!medioSeleccionado) return null;
+    
+    if (medioSeleccionado.value === 'whatsapp') {
+        const codigo = document.getElementById('countryCode').value;
+        const numero = document.getElementById('telefono').value.trim();
+        
+        if (!codigo || !numero) {
+            console.error('❌ WhatsApp: faltan datos');
+            return null;
+        }
+        
+        // ¡CORRECCIÓN CRÍTICA! Solo devuelve 'telefono'
+        return {
+            medio: 'whatsapp',
+            telefono: codigo + numero  // ← ¡UN SOLO CAMPO!
+        };
+        
+    } else if (medioSeleccionado.value === 'email') {
+        const email = document.getElementById('emailInput').value.trim();
+        
+        if (!email) {
+            console.error('❌ Email: vacío');
+            return null;
+        }
+        
+        return {
+            medio: 'email',
+            email: email
+        };
     }
+    
+    return null;
+}
 
     // ========== EVENTOS ==========
 
@@ -1103,7 +1140,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
                 console.error('❌ Error enviando pedido:', error);
 
                 // Intentar método alternativo si falla el fetch
-                try {
+               /** try {
                     console.log('🔄 Intentando método alternativo...');
                     await enviarConFormulario(datos);
                     alert('✅ Pedido enviado mediante método alternativo.');
@@ -1122,7 +1159,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
                     } else {
                         alert(`⚠️ Hubo un error al enviar el pedido: ${error.message}\n\nPor favor, contacte directamente por teléfono.`);
                     }
-                }
+                }*/
             } finally {
                 // Restaurar botón
                 modalEnviar.textContent = textoOriginal;
@@ -1132,7 +1169,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
     });
 
     // ========== FUNCIÓN PARA ENVIAR CON FORMULARIO (ALTERNATIVA) ==========
-    function enviarConFormulario(datos) {
+    /**function enviarConFormulario(datos) {
         return new Promise((resolve, reject) => {
             try {
                 // Crear iframe para la respuesta
@@ -1169,7 +1206,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
                 reject(error);
             }
         });
-    }
+    }*/
 
     // ========== FUNCIÓN ALTERNATIVA PARA ENVIAR FORMULARIO ==========
     function enviarFormularioAlternativo(datos) {
@@ -1248,6 +1285,7 @@ function aceptarCookies() {
 </script>
 </body>
 </html>
+
 
 
 
