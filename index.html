@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' http: https:;
+    script-src 'self' 'unsafe-inline' http://cdnjs.cloudflare.com https://cdnjs.cloudflare.com http://fonts.googleapis.com https://fonts.googleapis.com https://script.google.com https://script.googleusercontent.com;
+    style-src 'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com http://cdnjs.cloudflare.com https://cdnjs.cloudflare.com;
+    font-src 'self' http://fonts.gstatic.com https://fonts.gstatic.com http://cdnjs.cloudflare.com https://cdnjs.cloudflare.com;
+    connect-src 'self' http://localhost:8000 https://farmaciabarcelo.duckdns.org https://script.google.com https://script.googleusercontent.com;
+    img-src 'self' data: http: https:;
+    frame-src 'self' http: https:;
+">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Pedidos online Farmacia Barceló - Calle Mejia Lequerica 3, Madrid">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Pedidos Farmacia Barceló</title>
+
+  <link rel="stylesheet" href="estilo.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 25px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #4CAF50;
+    }
+
+    .modal-title {
+        font-size: 1.5em;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .close-modal:hover {
+        color: #000;
+    }
+
+    .resumen-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 0.9em;
+    }
+
+    .resumen-table th {
+        background-color: #4CAF50;
+        color: white;
+        text-align: left;
+        padding: 12px 15px;
+        font-weight: 600;
+    }
+
+    .resumen-table td {
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .resumen-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .modal-input-group {
+        margin: 20px 0;
+    }
+
+    .modal-input-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .modal-input-group input, .modal-input-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+
+    /* Estilos para las opciones de contacto */
+    .contacto-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+    }
+    .contacto-option label{
+        display: flex;
+        flex: row;
+        margin: 0px;
+        gap: 2px;
+    }
+
+    .contacto-option {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin:  0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .contacto-option:hover {
+        background-color: #f9f9f9;
+    }
+
+    .contacto-option.selected {
+        border-color: #4CAF50;
+        background-color: #f0fff0;
+    }
+
+    .contacto-option input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .contacto-details {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        border-left: 4px solid #4CAF50;
+    }
+
+    .contacto-details.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .phone-input-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .country-select {
+        max-width: 30%;
+    }
+
+    .phone-input {
+        flex: 1;
+        max-width: 70%;
+    }
+
+    .email-suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .email-suggestion-btn {
+        padding: 5px 10px;
+        background-color: #e0e0e0;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.2s;
+    }
+
+    .email-suggestion-btn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .privacy-checkbox {
+        margin: 20px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .privacy-checkbox input[type="checkbox"] {
+        margin-top: 3px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .modal-button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 1em;
+    }
+
+    #modal-enviar {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #modal-cancelar {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .error-message {
+        color: #f44336;
+        font-size: 0.85em;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .required {
+        color: #f44336;
+    }
+  </style>
+</head>
+<body>
+<div class="centered-container">
+<div id="body-header">
+    <img src="logo.PNG">
+</div>
+<div id="content">
+    <h1>Pida ahora y recoja luego</h1>
+
+    <div class='apartado' id="medicamento">
+    <label for="medicamento-input"><i class="fa fa-hiking"></i>Medicamento</label>
+    <input id="medicamento-input" name="medicamento" placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
+    </div>
+
+    <div class='apartado' id="laboratorio">
+    <label for="laboratorio-input"><i class="fa fa-hiking"></i>Laboratorio o Marca</label>
+    <input id="laboratorio-input" name="laboratorio" placeholder="Ej. Cofares (Si no especifica cualquiera)">
+    </div>
+
+    <div class='apartado' id="dosis">
+    <label for="dosis-input"><i class="fa fa-hiking"></i>Dosis</label>
+    <input id="dosis-input" name="dosis" placeholder="Ej. 500mg/100mL" required>
+    </div>
+
+    <div class='apartado' id="cantidad">
+    <label for="cantidad-input"><i class="fa fa-hiking"></i>Cantidad (Max 10)</label>
+    <input type="number" id="cantidad-input" name="cantidad" min="1" max="10" value="1" required>
+    </div>
+
+    <div class="button-container"><button class="plus"><strong>+</strong></button></div>
+    <div class="finish-buttons-container">
+        <button class="finish-buttons" id="cancelar">CANCELAR</button>
+        <button class="finish-buttons" id="enviar">ENVIAR</button>
+    </div>
+</div>
+</div>
+
+<!-- Modal para resumen del pedido -->
+<div id="resumenModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">📋 Resumen de su pedido</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+
+        <div class="resumen-info">
+            <p>Revise los detalles de su pedido antes de confirmar:</p>
+
+            <!-- Tabla de resumen -->
+            <table class="resumen-table">
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Laboratorio</th>
+                        <th>Dosis</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaResumen">
+                    <!-- Los datos se llenarán con JavaScript -->
+                </tbody>
+            </table>
+
+            <!-- Nueva sección de contacto -->
+            <div class="modal-input-group">
+                <label for="medioContacto">
+                    <i class="fa fa-bell"></i> ¿Qué medio prefiere para que le avisemos de que su pedido está listo?
+                    <span class="required">*</span>
+                </label>
+                <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">
+                    Seleccione cómo desea que le contactemos cuando sus medicamentos estén listos para recoger.
+                </p>
+
+                <div class="contacto-options">
+                    <div class="contacto-option" data-value="whatsapp">
+                        <input type="radio" name="medioContacto" id="whatsapp" value="whatsapp">
+                        <label for="whatsapp" style="cursor: pointer; flex: 1;">
+                            <i class="fa fa-whatsapp" style="color: #25D366; "></i>
+                             WhatsApp
+                        </label>
+                    </div>
+
+                    <div class="contacto-option" data-value="email">
+                        <input type="radio" name="medioContacto" id="email" value="email">
+                        <label for="email" style="cursor: pointer; flex: 1;">
+                            <i class="fa fa-envelope" style="color: rgb(142, 60, 151);"></i>
+                             Email
+                        </label>
+                    </div>
+                </div>
+                <div class="error-message" id="error-medioContacto"></div>
+
+                <!-- Detalles para WhatsApp -->
+                <div class="contacto-details" id="whatsapp-details">
+                    <h4 style="margin-top: 0; color: #333;">Información para WhatsApp</h4>
+                    <div class="phone-input-container">
+                        <select id="countryCode" class="country-select">
+                            <option value="">Seleccione país</option>
+                            <option value="+34">🇪🇸 España (+34)</option>
+                            <option value="+41">🇨🇭 Suiza (+41)</option>
+                            <option value="+33">🇫🇷 Francia (+33)</option>
+                            <option value="+49">🇩🇪 Alemania (+49)</option>
+                            <option value="+39">🇮🇹 Italia (+39)</option>
+                            <option value="+44">🇬🇧 Reino Unido (+44)</option>
+                            <option value="+1">🇺🇸 USA/Canadá (+1)</option>
+                            <option value="+52">🇲🇽 México (+52)</option>
+                            <option value="+54">🇦🇷 Argentina (+54)</option>
+                            <option value="+55">🇧🇷 Brasil (+55)</option>
+                            <option value="+56">🇨🇱 Chile (+56)</option>
+                            <option value="+57">🇨🇴 Colombia (+57)</option>
+                            <option value="+51">🇵🇪 Perú (+51)</option>
+                            <option value="+58">🇻🇪 Venezuela (+58)</option>
+                        </select>
+                        <input type="tel" id="telefono" class="phone-input" placeholder="Ej: 612345678" maxlength="15">
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
+                        <i class="fa fa-info-circle"></i> Solo enviaremos un mensaje cuando su pedido esté listo para recoger.
+                    </p>
+                    <div class="error-message" id="error-whatsapp"></div>
+                </div>
+
+                <!-- Detalles para Email -->
+                <div class="contacto-details" id="email-details">
+                    <h4 style="margin-top: 0; color: #333;">Información para Email</h4>
+                    <input type="email" id="emailInput" placeholder="ejemplo@correo.com" style="width: 100%;">
+
+                    <div class="email-suggestions">
+                        <span style="font-size: 0.9em; color: #666; width: 100%; margin-bottom: 5px;">
+                            Dominios sugeridos:
+                        </span>
+                        <button type="button" class="email-suggestion-btn" data-domain="@gmail.com">@gmail.com</button>
+                        <button type="button" class="email-suggestion-btn" data-domain="@hotmail.com">@hotmail.com</button>
+                        <button type="button" class="email-suggestion-btn" data-domain="@yahoo.com">@yahoo.com</button>
+                        <button type="button" class="email-suggestion-btn" data-domain="@outlook.com">@outlook.com</button>
+                        <button type="button" class="email-suggestion-btn" data-domain="@icloud.com">@icloud.com</button>
+                        <button type="button" class="email-suggestion-btn" data-domain="@gmx.com">@gmx.com</button>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">
+                        <i class="fa fa-info-circle"></i> Solo enviaremos un correo cuando su pedido esté listo para recoger.
+                    </p>
+                    <div class="error-message" id="error-email"></div>
+                </div>
+            </div>
+
+            <!-- Checkbox de privacidad -->
+            <div class="privacy-checkbox">
+                <input type="checkbox" id="aceptoPrivacidad" required>
+                <label for="aceptoPrivacidad">
+                    Acepto el uso de mis datos según la
+                    <a href="politica-privacidad.html" class="privacy-link" target="_blank">política de privacidad</a>.
+                    (Enlace a PDF explicativo del tratamiento de datos)
+                </label>
+            </div>
+            <div class="error-message" id="error-privacidad"></div>
+
+            <!-- Botones del modal -->
+            <div class="modal-buttons">
+                <button class="modal-button" id="modal-cancelar">Cancelar</button>
+                <button class="modal-button" id="modal-enviar">Confirmar y Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Honeypot para bots (oculto) -->
+<div style="display: none !important; opacity: 0; position: absolute; left: -9999px;">
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ========== CONFIGURACIÓN FASTAPI CON GOOGLE  ==========
+    //const API_URL = window.location.origin;  // Detecta automáticamente: http://localhost:8000
+    //const API_ENDPOINT = `${API_URL}/api/enviar-pedido`;
+    // ========== CONFIGURACIÓN FASTAPI CON Hetzner  ==========
+const API_URL = 'https://farmaciabarcelo.duckdns.org/farmacia-api';  // ← CON LA IP DE TU SERVIDOR
+const API_ENDPOINT = `${API_URL}/enviar-pedido`
+console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
+
+    // ========== VARIABLES GLOBALES ==========
+    const plusButton = document.querySelector('.plus');
+    const buttonContainer = document.querySelector('.button-container');
+    const enviarButton = document.getElementById('enviar');
+    const cancelarButton = document.getElementById('cancelar');
+    const modal = document.getElementById('resumenModal');
+    const closeModal = document.querySelector('.close-modal');
+    const modalCancelar = document.getElementById('modal-cancelar');
+    const modalEnviar = document.getElementById('modal-enviar');
+    const aceptoPrivacidad = document.getElementById('aceptoPrivacidad');
+    const tablaResumen = document.getElementById('tablaResumen');
+
+    // Nuevas variables para el sistema de contacto
+    const whatsappOption = document.getElementById('whatsapp');
+    const emailOption = document.getElementById('email');
+    const whatsappDetails = document.getElementById('whatsapp-details');
+    const emailDetails = document.getElementById('email-details');
+    const countryCodeSelect = document.getElementById('countryCode');
+    const telefonoInput = document.getElementById('telefono');
+    const emailInput = document.getElementById('emailInput');
+    const contactoOptions = document.querySelectorAll('.contacto-option');
+
+    // Contador para medicamentos
+    let cont = 1;
+
+    // ========== FUNCIÓN PARA AÑADIR MEDICAMENTOS ==========
+    // ========== FUNCIÓN PARA RECOLECTAR TODOS LOS MEDICAMENTOS ==========
+    function recolectarDatosMedicamentos() {
+        const medicamentos = [];
+
+        // 1. PRIMER MEDICAMENTO (el original)
+        const primerMedInput = document.querySelector('#medicamento-input');
+        if (primerMedInput && primerMedInput.value.trim()) {
+            medicamentos.push({
+                nombre: primerMedInput.value.trim(),
+                laboratorio: document.querySelector('#laboratorio-input')?.value.trim() || '',
+                dosis: document.querySelector('#dosis-input')?.value.trim() || '',
+                cantidad: document.querySelector('#cantidad-input')?.value || '1'
+            });
+        }
+
+        // 2. MEDICAMENTOS AGREGADOS
+        const medicamentosAgregados = document.querySelectorAll('.medicamento-agregado');
+        medicamentosAgregados.forEach(div => {
+            // Obtener el número de este medicamento
+            const medicamentoId = div.getAttribute('data-medicamento-id');
+
+            // Buscar inputs por sus IDs específicos
+            const nombreInput = div.querySelector('input[placeholder*="Paracetamol"]');
+            const labInput = div.querySelector('input[placeholder*="Cofares"]');
+            const dosisInput = div.querySelector('input[placeholder*="500mg"]');
+            const cantidadInput = div.querySelector('input[type="number"]');
+
+
+            if (nombreInput && nombreInput.value.trim()) {
+                medicamentos.push({
+                    nombre: nombreInput.value.trim(),
+                    laboratorio: labInput?.value.trim() || '',
+                    dosis: dosisInput?.value.trim() || '',
+                    cantidad: cantidadInput?.value || '1'
+                });
+            }
+        });
+
+        return medicamentos;
+    }
+
+    // ========== FUNCIÓN PARA AÑADIR MEDICAMENTOS ==========
+    plusButton.addEventListener('click', function() {
+        cont++;
+
+        // Crear línea separadora
+        const lineaSeparadora = document.createElement('hr');
+        lineaSeparadora.style.cssText = `
+            margin: 20px 0;
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+        `;
+
+        // Crear nuevo medicamento
+        const nuevoMedicamentoDiv = document.createElement('div');
+        nuevoMedicamentoDiv.className = 'medicamento-agregado';
+        nuevoMedicamentoDiv.setAttribute('data-medicamento-id', cont);
+        nuevoMedicamentoDiv.innerHTML = `
+            <div class='apartado' id="medicamento-${cont}">
+                <label><i class="fa fa-hiking"></i>Medicamento ${cont}</label>
+                <input placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
+            </div>
+
+            <div class='apartado' id="laboratorio-${cont}">
+                <label><i class="fa fa-hiking"></i>Laboratorio o Marca</label>
+                <input placeholder="Ej. Cofares (Si no especifica cualquiera).">
+            </div>
+
+            <div class='apartado' id="dosis-${cont}">
+                <label><i class="fa fa-hiking"></i>Dosis</label>
+                <input placeholder="Ej. 500mg/100mL" required>
+            </div>
+
+            <div class='apartado' id="cantidad-${cont}">
+                <label><i class="fa fa-hiking"></i>Cantidad (Max 10)</label>
+                <input type="number" id="participants-${cont}" min="1" max="10" value="1" required>
+            </div>
+
+            <button class='borrar-medicamento' data-medicamento="${cont}">
+                Borrar medicamento ${cont}
+            </button>
+        `;
+
+        // Estilo botón borrar
+        const botonBorrar = nuevoMedicamentoDiv.querySelector('.borrar-medicamento');
+        botonBorrar.style.cssText = `
+            margin: 10px 0;
+            padding: 8px 16px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        `;
+
+        // Insertar en la página
+        buttonContainer.parentNode.insertBefore(lineaSeparadora, buttonContainer);
+        buttonContainer.parentNode.insertBefore(nuevoMedicamentoDiv, buttonContainer);
+
+        // Guardar referencia a la línea
+        nuevoMedicamentoDiv.separadorAsociado = lineaSeparadora;
+
+        // Evento para borrar medicamento
+        botonBorrar.addEventListener('click', function() {
+            const numeroMedicamento = this.getAttribute('data-medicamento');
+
+            if (confirm(`¿Está seguro de borrar el medicamento ${numeroMedicamento}?`)) {
+                nuevoMedicamentoDiv.parentNode.removeChild(nuevoMedicamentoDiv);
+                if (lineaSeparadora && lineaSeparadora.parentNode) {
+                    lineaSeparadora.parentNode.removeChild(lineaSeparadora);
+                }
+                actualizarNumeracion();
+            }
+        });
+    });
+
+    // ========== FUNCIÓN PARA ACTUALIZAR NUMERACIÓN ==========
+    function actualizarNumeracion() {
+        cont = 1;
+
+        // Obtener todos los medicamentos agregados
+        const medicamentosAgregados = document.querySelectorAll('.medicamento-agregado');
+
+        // Renumerar cada medicamento
+        medicamentosAgregados.forEach((medicamentoDiv, index) => {
+            const nuevoNumero = index + 2;
+
+            // Actualizar atributo
+            medicamentoDiv.setAttribute('data-medicamento-id', nuevoNumero);
+
+            // Actualizar todos los IDs y names
+            const elementos = [
+                { selector: `#medicamento-input-${index + 2}`, nuevoId: `medicamento-input-${nuevoNumero}`, nuevoName: `medicamento-${nuevoNumero}` },
+                { selector: `#laboratorio-input-${index + 2}`, nuevoId: `laboratorio-input-${nuevoNumero}`, nuevoName: `laboratorio-${nuevoNumero}` },
+                { selector: `#dosis-input-${index + 2}`, nuevoId: `dosis-input-${nuevoNumero}`, nuevoName: `dosis-${nuevoNumero}` },
+                { selector: `#cantidad-input-${index + 2}`, nuevoId: `cantidad-input-${nuevoNumero}`, nuevoName: `cantidad-${nuevoNumero}` }
+            ];
+
+            elementos.forEach(item => {
+                const elemento = medicamentoDiv.querySelector(item.selector);
+                if (elemento) {
+                    elemento.id = item.nuevoId;
+                    elemento.name = item.nuevoName;
+
+                    // Actualizar label for
+                    const label = elemento.parentNode.querySelector('label');
+                    if (label && label.getAttribute('for')) {
+                        label.setAttribute('for', item.nuevoId);
+                    }
+                }
+            });
+
+            // Actualizar labels de texto
+            const labels = medicamentoDiv.querySelectorAll('label');
+            labels.forEach(label => {
+                if (label.textContent.includes('Medicamento')) {
+                    label.innerHTML = `<i class="fa fa-hiking"></i>Medicamento ${nuevoNumero}`;
+                }
+            });
+
+            // Actualizar botón borrar
+            const botonBorrar = medicamentoDiv.querySelector('.borrar-medicamento');
+            if (botonBorrar) {
+                botonBorrar.setAttribute('data-medicamento', nuevoNumero);
+                botonBorrar.textContent = `Borrar medicamento ${nuevoNumero}`;
+            }
+        });
+
+        // Actualizar cont para próximo medicamento
+        cont = medicamentosAgregados.length + 2;
+    }
+
+    // ========== FUNCIÓN PARA MOSTRAR RESUMEN ==========
+    function mostrarResumen() {
+        const medicamentos = recolectarDatosMedicamentos();
+        tablaResumen.innerHTML = '';
+
+        if (medicamentos.length === 0) {
+            tablaResumen.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #999;">
+                        No hay medicamentos en el pedido
+                    </td>
+                </tr>
+            `;
+            return false;
+        }
+
+        medicamentos.forEach(med => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${med.nombre || 'No especificado'}</td>
+                <td>${med.laboratorio || 'No especificado'}</td>
+                <td>${med.dosis || 'No especificado'}</td>
+                <td>${med.cantidad}</td>
+            `;
+            tablaResumen.appendChild(row);
+        });
+
+        return true;
+    }
+
+    // ========== FUNCIONES PARA EL NUEVO SISTEMA DE CONTACTO ==========
+
+    // Eventos para las opciones de contacto
+    contactoOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const radioInput = this.querySelector('input[type="radio"]');
+            radioInput.checked = true;
+
+            // Actualizar estilos visuales
+            contactoOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+
+            // Mostrar/ocultar detalles según la opción
+            const valor = radioInput.value;
+
+            // Ocultar todos los detalles primero
+            whatsappDetails.classList.remove('active');
+            emailDetails.classList.remove('active');
+
+            // Mostrar los detalles correspondientes
+            if (valor === 'whatsapp') {
+                whatsappDetails.classList.add('active');
+            } else if (valor === 'email') {
+                emailDetails.classList.add('active');
+            }
+
+            // Limpiar mensajes de error
+            document.getElementById('error-medioContacto').style.display = 'none';
+        });
+    });
+
+    // Función para autocompletar email con sugerencias
+    document.querySelectorAll('.email-suggestion-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const dominio = this.getAttribute('data-domain');
+            const emailActual = emailInput.value;
+
+            // Extraer la parte local del email (antes del @)
+            const parteLocal = emailActual.split('@')[0] || '';
+
+            // Si ya hay una parte local, mantenerla y añadir el dominio seleccionado
+            if (parteLocal.trim()) {
+                emailInput.value = parteLocal.trim() + dominio;
+            } else {
+                // Si no hay nada, dejar solo el dominio (el usuario pondrá la parte local)
+                emailInput.value = dominio;
+                // Seleccionar la parte antes del @ para facilitar la edición
+                setTimeout(() => {
+                    emailInput.setSelectionRange(0, emailInput.value.indexOf('@'));
+                }, 10);
+            }
+
+            // Dar foco al input
+            emailInput.focus();
+        });
+    });
+
+    // Validación para números de teléfono (solo números)
+    telefonoInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        document.getElementById('error-whatsapp').style.display = 'none';
+    });
+
+    // Validación para email
+    emailInput.addEventListener('input', function() {
+        document.getElementById('error-email').style.display = 'none';
+    });
+
+    // ========== FUNCIÓN PARA VALIDAR FORMULARIO ==========
+    function validarFormulario() {
+        let esValido = true;
+
+        // Ocultar todos los mensajes de error
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.style.display = 'none';
+        });
+
+        // Validar selección de medio de contacto
+        const medioSeleccionado = document.querySelector('input[name="medioContacto"]:checked');
+        if (!medioSeleccionado) {
+            document.getElementById('error-medioContacto').textContent = 'Por favor, seleccione un medio de contacto';
+            document.getElementById('error-medioContacto').style.display = 'block';
+            esValido = false;
+        } else {
+            // Validar según el medio seleccionado
+            if (medioSeleccionado.value === 'whatsapp') {
+                // Validar WhatsApp
+                if (!countryCodeSelect.value) {
+                    document.getElementById('error-whatsapp').textContent = 'Por favor, seleccione un país';
+                    document.getElementById('error-whatsapp').style.display = 'block';
+                    esValido = false;
+                } else if (!telefonoInput.value.trim()) {
+                    document.getElementById('error-whatsapp').textContent = 'Por favor, ingrese un número de teléfono';
+                    document.getElementById('error-whatsapp').style.display = 'block';
+                    esValido = false;
+                } else if (telefonoInput.value.trim().length < 8) {
+                    document.getElementById('error-whatsapp').textContent = 'El número de teléfono debe tener al menos 8 dígitos';
+                    document.getElementById('error-whatsapp').style.display = 'block';
+                    esValido = false;
+                }
+            } else if (medioSeleccionado.value === 'email') {
+                // Validar Email
+                if (!emailInput.value.trim()) {
+                    document.getElementById('error-email').textContent = 'Por favor, ingrese una dirección de email';
+                    document.getElementById('error-email').style.display = 'block';
+                    esValido = false;
+                } else if (!validarEmail(emailInput.value.trim())) {
+                    document.getElementById('error-email').textContent = 'Por favor, ingrese un email válido';
+                    document.getElementById('error-email').style.display = 'block';
+                    esValido = false;
+                }
+            }
+        }
+
+        // Validar privacidad
+        if (!aceptoPrivacidad.checked) {
+            document.getElementById('error-privacidad').textContent = 'Debe aceptar la política de privacidad para continuar';
+            document.getElementById('error-privacidad').style.display = 'block';
+            esValido = false;
+        }
+
+        return esValido;
+    }
+
+    // Función para validar email
+    function validarEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    // Función para obtener los datos de contacto
+    function obtenerDatosContacto() {
+        const medioSeleccionado = document.querySelector('input[name="medioContacto"]:checked');
+
+        if (!medioSeleccionado) return null;
+
+        if (medioSeleccionado.value === 'whatsapp') {
+            return {
+                medio: 'whatsapp',
+                telefono: countryCodeSelect.value + telefonoInput.value.trim(),
+                codigoPais: countryCodeSelect.value,
+                numero: telefonoInput.value.trim()
+            };
+        } else if (medioSeleccionado.value === 'email') {
+            return {
+                medio: 'email',
+                email: emailInput.value.trim()
+            };
+        }
+
+        return null;
+    }
+
+    // ========== EVENTOS ==========
+
+    // Botón Enviar
+    enviarButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (mostrarResumen()) {
+            modal.style.display = 'block';
+            // Resetear formulario de contacto
+            contactoOptions.forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('input[name="medioContacto"]').forEach(input => input.checked = false);
+            whatsappDetails.classList.remove('active');
+            emailDetails.classList.remove('active');
+            countryCodeSelect.value = '';
+            telefonoInput.value = '';
+            emailInput.value = '';
+            aceptoPrivacidad.checked = false;
+        } else {
+            alert('Por favor, agregue al menos un medicamento antes de enviar el pedido.');
+        }
+    });
+
+    // ========== FUNCIÓN PARA LIMPIAR FORMULARIO COMPLETO ==========
+    function limpiarFormularioCompleto() {
+        // 1. Limpiar todos los campos del formulario principal
+        document.querySelectorAll('#content input:not([type="button"])').forEach(input => {
+            if (input.type === 'number') {
+                input.value = '1'; // Resetear cantidad a 1
+            } else if (input.type === 'checkbox') {
+                input.checked = false;
+            } else {
+                input.value = ''; // Limpiar texto
+            }
+        });
+
+        // 2. Eliminar todos los medicamentos agregados dinámicamente
+        document.querySelectorAll('.medicamento-agregado').forEach(div => {
+            // Eliminar también la línea separadora asociada
+            if (div.separadorAsociado && div.separadorAsociado.parentNode) {
+                div.separadorAsociado.parentNode.removeChild(div.separadorAsociado);
+            }
+            div.remove();
+        });
+
+        // 3. Eliminar cualquier línea separadora adicional
+        document.querySelectorAll('hr').forEach(hr => {
+            if (hr.style.backgroundColor === '#ddd' || hr.style.margin === '20px 0') {
+                hr.remove();
+            }
+        });
+
+        // 4. Resetear el contador de medicamentos
+        cont = 1;
+
+        // 5. Limpiar el modal si está abierto
+        if (modal.style.display === 'block') {
+            // Limpiar tabla de resumen
+            tablaResumen.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #999;">
+                        No hay medicamentos en el pedido
+                    </td>
+                </tr>
+            `;
+
+            // Resetear opciones de contacto
+            contactoOptions.forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('input[name="medioContacto"]').forEach(input => input.checked = false);
+            whatsappDetails.classList.remove('active');
+            emailDetails.classList.remove('active');
+
+            // Limpiar campos de contacto
+            countryCodeSelect.value = '';
+            telefonoInput.value = '';
+            emailInput.value = '';
+            aceptoPrivacidad.checked = false;
+
+            // Cerrar modal
+            modal.style.display = 'none';
+        }
+
+        // 6. Limpiar cualquier mensaje de error
+        document.querySelectorAll('.error-message').forEach(error => {
+            error.style.display = 'none';
+        });
+    }
+
+    // Botón Cancelar - CON CONFIRMACIÓN MEJORADA
+    cancelarButton.addEventListener('click', function() {
+        // Crear modal de confirmación personalizado
+        const confirmarCancelacion = confirm('¿Está seguro de que desea cancelar el pedido?\n\n⚠️ Se perderán todos los datos ingresados.');
+
+        if (confirmarCancelacion) {
+            // Mostrar mensaje de confirmación en pantalla (opcional, estilo más bonito)
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #4CAF50;
+                color: white;
+                padding: 20px 30px;
+                border-radius: 10px;
+                z-index: 10000;
+                font-weight: bold;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                animation: fadeInOut 2s ease-in-out;
+            `;
+
+            // Estilos CSS para la animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            mensajeDiv.textContent = '✅ Pedido cancelado. Recargando...';
+            document.body.appendChild(mensajeDiv);
+
+            // Limpiar todos los datos del formulario
+            limpiarFormularioCompleto();
+
+            // Recargar la página después de un breve momento
+            setTimeout(() => {
+                location.reload(); // Recarga la página completamente
+            }, 1500);
+        }
+        // Si el usuario hace clic en "Cancelar" en el confirm, no hace nada
+    });
+
+    // Eventos del modal
+    closeModal.addEventListener('click', () => modal.style.display = 'none');
+
+    modalCancelar.addEventListener('click', function() {
+        const confirmarCancelacion = confirm('¿Está seguro de que desea cancelar el pedido?\n\n⚠️ Se perderán todos los datos ingresados.');
+
+        if (confirmarCancelacion) {
+            // Mostrar mensaje de confirmación en pantalla
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #4CAF50;
+                color: white;
+                padding: 20px 30px;
+                border-radius: 10px;
+                z-index: 10000;
+                font-weight: bold;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                animation: fadeInOut 2s ease-in-out;
+            `;
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            mensajeDiv.textContent = '✅ Pedido cancelado. Recargando...';
+            document.body.appendChild(mensajeDiv);
+
+            limpiarFormularioCompleto();
+
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+    });
+
+    // ========== BOTÓN ENVIAR DEL MODAL (MODIFICADO PARA FASTAPI) ==========
+    modalEnviar.addEventListener('click', async function() {
+        if (validarFormulario()) {
+
+            // Preparar datos
+            const datosContacto = obtenerDatosContacto();
+            const medicamentos = recolectarDatosMedicamentos();
+
+            // Validar medicamentos
+            if (medicamentos.length === 0) {
+                alert('Por favor, agregue al menos un medicamento.');
+                return;
+            }
+
+            // Crear objeto de datos limpio (ESTRUCTURA QUE ESPERA FASTAPI)
+            const datos = {
+                contacto: datosContacto,
+                medicamentos: medicamentos,
+                acepto_privacidad: aceptoPrivacidad.checked,
+                website: document.getElementById('website').value // Honeypot
+                // FastAPI añade automáticamente la fecha
+            };
+
+            console.log('📤 Enviando a FastAPI:', datos);
+            console.log('🌐 Endpoint:', API_ENDPOINT);
+
+            // Deshabilitar botón para evitar múltiples clics
+            const textoOriginal = modalEnviar.textContent;
+            modalEnviar.textContent = '⏳ Enviando...';
+            modalEnviar.disabled = true;
+
+            try {
+                // ENVIAR A FASTAPI (no a App Script)
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(datos)
+                });
+
+                console.log('📥 Respuesta HTTP:', response.status, response.statusText);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Error respuesta:', errorText);
+
+                    let mensajeError = 'Error del servidor';
+                    try {
+                        const errorData = JSON.parse(errorText);
+                        mensajeError = errorData.detail || errorData.message || errorText;
+                    } catch {
+                        mensajeError = errorText || 'Error desconocido';
+                    }
+
+                    throw new Error(mensajeError);
+                }
+
+                const resultado = await response.json();
+                console.log('✅ Respuesta FastAPI:', resultado);
+
+                // Mostrar mensaje de éxito con identificador
+                const identificador = resultado.identificador || resultado.referencia || '';
+                const mensajeExito = resultado.message || '✅ Pedido enviado correctamente.';
+
+                alert(`${mensajeExito}${identificador ? '\n\nSu identificador: ' + identificador : ''}`);
+
+                // Cerrar modal
+                modal.style.display = 'none';
+
+                // Limpiar formulario principal
+                document.querySelectorAll('#content input:not([type="button"])').forEach(input => {
+                    if (input.type === 'number') {
+                        input.value = '1';
+                    } else {
+                        input.value = '';
+                    }
+                });
+
+                // Eliminar medicamentos adicionales
+                document.querySelectorAll('.medicamento-agregado').forEach(el => el.remove());
+                document.querySelectorAll('hr').forEach(hr => {
+                    if (hr.style.backgroundColor === '#ddd') hr.remove();
+                });
+
+                // Resetear contador
+                cont = 1;
+
+                // Resetear modal
+                contactoOptions.forEach(opt => opt.classList.remove('selected'));
+                document.querySelectorAll('input[name="medioContacto"]').forEach(input => input.checked = false);
+                whatsappDetails.classList.remove('active');
+                emailDetails.classList.remove('active');
+                aceptoPrivacidad.checked = false;
+
+            } catch (error) {
+                console.error('❌ Error enviando pedido:', error);
+
+                // Intentar método alternativo si falla el fetch
+                try {
+                    console.log('🔄 Intentando método alternativo...');
+                    await enviarConFormulario(datos);
+                    alert('✅ Pedido enviado mediante método alternativo.');
+                    modal.style.display = 'none';
+                    limpiarFormularioCompleto();
+                } catch (fallbackError) {
+                    console.error('❌ Error método alternativo:', fallbackError);
+
+                    // Mensajes amigables según el tipo de error
+                    if (error.message.includes('Demasiados pedidos')) {
+                        alert('⚠️ Has enviado muchos pedidos recientemente. Por favor, espera un minuto.');
+                    } else if (error.message.includes('Debe aceptar')) {
+                        alert('⚠️ ' + error.message);
+                    } else if (error.message.includes('conectado_google_sheets') || error.message.includes('Google Sheets')) {
+                        alert('⚠️ Error de conexión con la base de datos. Por favor, inténtelo más tarde o contacte a la farmacia directamente.');
+                    } else {
+                        alert(`⚠️ Hubo un error al enviar el pedido: ${error.message}\n\nPor favor, contacte directamente por teléfono.`);
+                    }
+                }
+            } finally {
+                // Restaurar botón
+                modalEnviar.textContent = textoOriginal;
+                modalEnviar.disabled = false;
+            }
+        }
+    });
+
+    // ========== FUNCIÓN PARA ENVIAR CON FORMULARIO (ALTERNATIVA) ==========
+    function enviarConFormulario(datos) {
+        return new Promise((resolve, reject) => {
+            try {
+                // Crear iframe para la respuesta
+                const iframe = document.createElement('iframe');
+                iframe.name = 'responseFrame';
+                iframe.style.display = 'none';
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        resolve();
+                        document.body.removeChild(iframe);
+                        document.body.removeChild(form);
+                    }, 1000);
+                };
+
+                document.body.appendChild(iframe);
+
+                // Crear formulario
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = API_ENDPOINT;
+                form.target = 'responseFrame';
+                form.style.display = 'none';
+
+                // Añadir campo con los datos JSON
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'data';
+                input.value = JSON.stringify(datos);
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    // ========== FUNCIÓN ALTERNATIVA PARA ENVIAR FORMULARIO ==========
+    function enviarFormularioAlternativo(datos) {
+        // Crear formulario oculto
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = API_ENDPOINT;
+        form.style.display = 'none';
+
+        // Añadir datos como input hidden
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'data';
+        input.value = JSON.stringify(datos);
+        form.appendChild(input);
+
+        // Añadir al documento y enviar
+        document.body.appendChild(form);
+        form.submit();
+
+        // Mostrar mensaje
+        alert('✅ Pedido enviado. Redirigiendo...');
+        modal.style.display = 'none';
+
+        // Limpiar después de un tiempo
+        setTimeout(() => {
+            document.body.removeChild(form);
+            // Limpiar formulario principal
+            cancelarButton.click();
+        }, 1000);
+    }
+
+    // Cerrar modal al hacer clic fuera
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) modal.style.display = 'none';
+    });
+
+    // Limpiar errores al interactuar con los campos
+    aceptoPrivacidad.addEventListener('change', function() {
+        if (this.checked) {
+            document.getElementById('error-privacidad').style.display = 'none';
+        }
+    });
+});
+
+// Cookies necesarias para funcionalidad
+if (!localStorage.getItem('cookiesAceptadas')) {
+    document.addEventListener('DOMContentLoaded', function() {
+        var banner = document.createElement('div');
+        banner.style.cssText = `
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            z-index: 10000;
+        `;
+        banner.innerHTML = `
+            <p>🍪 Usamos cookies necesarias para el funcionamiento del pedido.
+            <button onclick="aceptarCookies()" style="margin-left: 10px; padding: 5px 15px; background: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                Aceptar
+            </button>
+            <a href="/politica-privacidad" style="color: #4CAF50; margin-left: 10px;">Más info</a></p>
+        `;
+        document.body.appendChild(banner);
+    });
+}
+
+function aceptarCookies() {
+    localStorage.setItem('cookiesAceptadas', 'true');
+    document.querySelector('div[style*="position: fixed; bottom: 0"]').remove();
+}
+</script>
+</body>
+</html>
