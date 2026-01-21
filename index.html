@@ -6,8 +6,8 @@
   <meta name="robots" content="index, follow">
   <meta name="description" content="Pedidos online Farmacia Barceló - Calle Mejia Lequerica 3, Madrid">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfwGVIsAAAAAPDeCdRZVLo3emfWUrg89YZzeEv_"></script>
   <title>Pedidos Farmacia Barceló</title>
-
   <link rel="stylesheet" href="estilo.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -581,7 +581,22 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             }
         });
     });
-
+    // ========== reCAPTCHA ==========
+    async function obtenerRecaptchaToken() {
+        return new Promise((resolve) => {
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LfwGVIsAAAAAPDeCdRZVLo3emfWUrg89YZzeEv_', {action: 'submit'})
+                    .then(function(token) {
+                        console.log('✅ reCAPTCHA token obtenido');
+                        resolve(token);
+                    })
+                    .catch(function(error) {
+                        console.error('❌ Error reCAPTCHA:', error);
+                        resolve(null); // Continuar sin reCAPTCHA en caso de error
+                    });
+            });
+        });
+    }
     // ========== FUNCIÓN PARA ACTUALIZAR NUMERACIÓN ==========
     function actualizarNumeracion() {
         cont = 1;
@@ -1043,11 +1058,11 @@ function obtenerDatosContacto() {
     // ========== BOTÓN ENVIAR DEL MODAL (MODIFICADO PARA FASTAPI) ==========
     modalEnviar.addEventListener('click', async function() {
         if (validarFormulario()) {
-
+            const recaptchaToken = await obtenerRecaptchaToken();//Recaptcha
             // Preparar datos
             const datosContacto = obtenerDatosContacto();
             const medicamentos = recolectarDatosMedicamentos();
-
+    
             // Validar medicamentos
             if (medicamentos.length === 0) {
                 alert('Por favor, agregue al menos un medicamento.');
@@ -1060,6 +1075,7 @@ function obtenerDatosContacto() {
                 medicamentos: medicamentos,
                 acepto_privacidad: aceptoPrivacidad.checked,
                 website: document.getElementById('website').value // Honeypot
+                recaptcha_token: recaptchaToken  //Recaptcha
                 // FastAPI añade automáticamente la fecha
             };
 
@@ -1285,6 +1301,7 @@ function aceptarCookies() {
 </script>
 </body>
 </html>
+
 
 
 
