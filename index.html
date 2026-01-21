@@ -1074,7 +1074,7 @@ function obtenerDatosContacto() {
                 contacto: datosContacto,
                 medicamentos: medicamentos,
                 acepto_privacidad: aceptoPrivacidad.checked,
-                website: document.getElementById('website').value // Honeypot
+                website: document.getElementById('website').value, // Honeypot
                 recaptcha_token: recaptchaToken  //Recaptcha
                 // FastAPI añade automáticamente la fecha
             };
@@ -1301,6 +1301,7 @@ function aceptarCookies() {
 </script>
 </body>
 </html>
+
 
 
 
