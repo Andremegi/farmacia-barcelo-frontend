@@ -827,8 +827,8 @@ function obtenerDatosContacto() {
     if (!medioSeleccionado) return null;
     
     if (medioSeleccionado.value === 'whatsapp') {
-        const codigo = document.getElementById('countryCode').value;
-        const numero = document.getElementById('telefono').value.trim();
+        const codigo = countryCodeSelect.value;
+        const numero = telefonoInput.value.trim();
         
         if (!codigo || !numero) {
             console.error('❌ WhatsApp: faltan datos');
@@ -1285,6 +1285,7 @@ function aceptarCookies() {
 </script>
 </body>
 </html>
+
 
 
 
