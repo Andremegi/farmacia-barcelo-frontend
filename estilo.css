@@ -128,6 +128,7 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-weight: 600;
 }
 .apartado label{
     color: white;
@@ -146,6 +147,18 @@ img {
     border: none;
     border-radius: 5px;
     padding: 10px;
+}
+.aviso {
+  font-size: 10px;     /* Letra pequeña (12px si el base es 16px) */
+  color: white;            /* Gris suave para que destaque menos */
+  margin-top: -20px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
 }
 
 #cancelar{
@@ -361,26 +374,26 @@ img {
         padding-top: 30px;
         align-items: flex-start;
     }
-    
+
     .centered-container {
         padding: 10px;
         max-width: 100%;
     }
-    
+
     #body-header, #content {
         max-width: 100%;
         width: 100%;
     }
-    
+
     #content h1 {
         font-size: 1.5rem;
     }
-    
+
     #content input {
         height: 40px;
         font-size: 14px;
     }
-    
+
     img {
         max-width: 200px;
     }
@@ -391,16 +404,16 @@ img {
         padding: 15px 10px;
         padding-top: 20px;
     }
-    
+
     #content h1 {
         font-size: 1.3rem;
     }
-    
+
     #content input {
         height: 38px;
         padding: 0 12px;
     }
-    
+
     img {
         max-width: 180px;
     }

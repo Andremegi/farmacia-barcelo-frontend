@@ -10,6 +10,7 @@
   <title>Pedidos Farmacia Barceló</title>
   <link rel="stylesheet" href="estilo.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -274,13 +275,15 @@
     <div class='apartado' id="medicamento">
     <label for="medicamento-input"><i class="fa fa-hiking"></i>Medicamento</label>
     <input id="medicamento-input" name="medicamento" placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
-    </div>
-
+    <p class="aviso">⚠️ Si pide un medicamento de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
+  Si no, no podremos entregarle el medicamento</p>
+  </div>
+<!--
     <div class='apartado' id="laboratorio">
     <label for="laboratorio-input"><i class="fa fa-hiking"></i>Laboratorio o Marca</label>
     <input id="laboratorio-input" name="laboratorio" placeholder="Ej. Cofares (Si no especifica cualquiera)">
     </div>
-
+  -->
     <div class='apartado' id="dosis">
     <label for="dosis-input"><i class="fa fa-hiking"></i>Dosis</label>
     <input id="dosis-input" name="dosis" placeholder="Ej. 500mg/100mL" required>
@@ -297,7 +300,7 @@
         <button class="finish-buttons" id="enviar">ENVIAR</button>
     </div>
 </div>
-  <div style="
+<div style="
     background-color: rgba(50, 0, 61, 0.9);
     color: #f9f9f9;
     width: 100%;
@@ -308,9 +311,8 @@
     padding: 20px;
     font-style:oblique;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 100">
-    <p> ⚠️ Si pide un medicamento con receta recuerde traerla cuando venga a recogerlo.<br>
-    De no traerla no podremos entregarle el medicamento</p>
+    font-weight: 600">
+    <p> ¿Te gustaria echar un ojo a nuestras ofertas? <a href='https://farmaciabarcelo.es/#ofertas' target="_blank" style='color:plum'>Pincha aquí </a></p>
 </div>
 </div>
 
@@ -330,7 +332,7 @@
                 <thead>
                     <tr>
                         <th>Medicamento</th>
-                        <th>Laboratorio</th>
+                        <!--<th>Laboratorio</th>-->
                         <th>Dosis</th>
                         <th>Cantidad</th>
                     </tr>
@@ -489,7 +491,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
         if (primerMedInput && primerMedInput.value.trim()) {
             medicamentos.push({
                 nombre: primerMedInput.value.trim(),
-                laboratorio: document.querySelector('#laboratorio-input')?.value.trim() || '',
+                //laboratorio: document.querySelector('#laboratorio-input')?.value.trim() || '',
                 dosis: document.querySelector('#dosis-input')?.value.trim() || '',
                 cantidad: document.querySelector('#cantidad-input')?.value || '1'
             });
@@ -511,7 +513,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             if (nombreInput && nombreInput.value.trim()) {
                 medicamentos.push({
                     nombre: nombreInput.value.trim(),
-                    laboratorio: labInput?.value.trim() || '',
+                    //laboratorio: labInput?.value.trim() || '',
                     dosis: dosisInput?.value.trim() || '',
                     cantidad: cantidadInput?.value || '1'
                 });
@@ -542,12 +544,14 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             <div class='apartado' id="medicamento-${cont}">
                 <label><i class="fa fa-hiking"></i>Medicamento ${cont}</label>
                 <input placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
+                <p class="aviso">⚠️ Si pide un medicamento de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
+                Si no, no podremos entregarle el medicamento</p>
             </div>
 
-            <div class='apartado' id="laboratorio-${cont}">
+           <!-- <div class='apartado' id="laboratorio-${cont}">
                 <label><i class="fa fa-hiking"></i>Laboratorio o Marca</label>
                 <input placeholder="Ej. Cofares (Si no especifica cualquiera).">
-            </div>
+            </div>-->
 
             <div class='apartado' id="dosis-${cont}">
                 <label><i class="fa fa-hiking"></i>Dosis</label>
@@ -629,7 +633,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             // Actualizar todos los IDs y names
             const elementos = [
                 { selector: `#medicamento-input-${index + 2}`, nuevoId: `medicamento-input-${nuevoNumero}`, nuevoName: `medicamento-${nuevoNumero}` },
-                { selector: `#laboratorio-input-${index + 2}`, nuevoId: `laboratorio-input-${nuevoNumero}`, nuevoName: `laboratorio-${nuevoNumero}` },
+                //{ selector: `#laboratorio-input-${index + 2}`, nuevoId: `laboratorio-input-${nuevoNumero}`, nuevoName: `laboratorio-${nuevoNumero}` },
                 { selector: `#dosis-input-${index + 2}`, nuevoId: `dosis-input-${nuevoNumero}`, nuevoName: `dosis-${nuevoNumero}` },
                 { selector: `#cantidad-input-${index + 2}`, nuevoId: `cantidad-input-${nuevoNumero}`, nuevoName: `cantidad-${nuevoNumero}` }
             ];
@@ -683,12 +687,11 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             `;
             return false;
         }
-
+//<td>${med.laboratorio || 'No especificado'}</td>, despues del medicamento abajo
         medicamentos.forEach(med => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${med.nombre || 'No especificado'}</td>
-                <td>${med.laboratorio || 'No especificado'}</td>
                 <td>${med.dosis || 'No especificado'}</td>
                 <td>${med.cantidad}</td>
             `;
@@ -850,41 +853,41 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
 
         return null;
     }*/
-  // REEMPLAZA la función obtenerDatosContacto con esta versión corregida:
+  // función obtenerDatosContacto con esta versión corregida:
 function obtenerDatosContacto() {
     const medioSeleccionado = document.querySelector('input[name="medioContacto"]:checked');
-    
+
     if (!medioSeleccionado) return null;
-    
+
     if (medioSeleccionado.value === 'whatsapp') {
         const codigo = countryCodeSelect.value;
         const numero = telefonoInput.value.trim();
-        
+
         if (!codigo || !numero) {
             console.error('❌ WhatsApp: faltan datos');
             return null;
         }
-        
+
         // ¡CORRECCIÓN CRÍTICA! Solo devuelve 'telefono'
         return {
             medio: 'whatsapp',
             telefono: codigo + numero  // ← ¡UN SOLO CAMPO!
         };
-        
+
     } else if (medioSeleccionado.value === 'email') {
         const email = document.getElementById('emailInput').value.trim();
-        
+
         if (!email) {
             console.error('❌ Email: vacío');
             return null;
         }
-        
+
         return {
             medio: 'email',
             email: email
         };
     }
-    
+
     return null;
 }
 
@@ -1073,16 +1076,34 @@ function obtenerDatosContacto() {
     // ========== BOTÓN ENVIAR DEL MODAL (MODIFICADO PARA FASTAPI) ==========
     modalEnviar.addEventListener('click', async function() {
         if (validarFormulario()) {
-            const recaptchaToken = await obtenerRecaptchaToken();//Recaptcha
             // Preparar datos
             const datosContacto = obtenerDatosContacto();
             const medicamentos = recolectarDatosMedicamentos();
-    
+
             // Validar medicamentos
             if (medicamentos.length === 0) {
                 alert('Por favor, agregue al menos un medicamento.');
                 return;
             }
+            // CREAR RESUMEN PARA EL USUARIO
+            let resumen = "📋 REVISE SUS DATOS DE CONTACTO ANTES DE ENVIAR:\n\n";
+            if (datosContacto.medio == 'whatsapp'){
+              resumen += `👤 Contacto: ${datosContacto.telefono || 'No especificado'}\n`;
+
+            } else if (datosContacto.medio === 'email') {
+              resumen += `👤 Contacto: ${datosContacto.email || 'No especificado'}\n`;
+
+            resumen += "¿Los datos son correctos? Si no, por favor proceda a cambiarlos";}
+
+            // MOSTRAR ALERT DE CONFIRMACIÓN
+            const confirmar = confirm(resumen);
+
+            if (!confirmar) {
+                console.log('❌ Usuario canceló el envío');
+                return; // Salir sin enviar
+            }
+
+            const recaptchaToken = await obtenerRecaptchaToken();//Recaptcha
 
             // Crear objeto de datos limpio (ESTRUCTURA QUE ESPERA FASTAPI)
             const datos = {
@@ -1316,16 +1337,3 @@ function aceptarCookies() {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
