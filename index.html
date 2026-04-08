@@ -271,12 +271,12 @@
 </div>
 <div id="content">
     <h1>Pida ahora y recoja luego</h1>
-
+<!--276,278,279,329,540-->
     <div class='apartado' id="medicamento">
-    <label for="medicamento-input"><i class="fa fa-hiking"></i>Medicamento</label>
+    <label for="medicamento-input"><i class="fa fa-hiking"></i>Producto</label>
     <input id="medicamento-input" name="medicamento" placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
-    <p class="aviso">⚠️ Si pide un medicamento de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
-  Si no, no podremos entregarle el medicamento</p>
+    <p class="aviso">⚠️ Si pide un producto de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
+  Si no, no podremos entregarle el producto</p>
   </div>
 <!--
     <div class='apartado' id="laboratorio">
@@ -300,18 +300,13 @@
         <button class="finish-buttons" id="enviar">ENVIAR</button>
     </div>
 </div>
-<div style="
-    background-color: rgba(50, 0, 61, 0.9);
+<div id='content2'style="
     color: #f9f9f9;
-    width: 100%;
-    border-radius: 5px;
-    text-align: center;
     margin-top: 10px;
-    max-width: 500px;
-    padding: 20px;
     font-style:oblique;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600">
+    font-weight: 600;
+    padding:20px;">
     <p> ¿Te gustaria echar un ojo a nuestras ofertas? <a href='https://farmaciabarcelo.es/#ofertas' target="_blank" style='color:plum'>Pincha aquí </a></p>
 </div>
 </div>
@@ -331,7 +326,7 @@
             <table class="resumen-table">
                 <thead>
                     <tr>
-                        <th>Medicamento</th>
+                        <th>Producto</th>
                         <!--<th>Laboratorio</th>-->
                         <th>Dosis</th>
                         <th>Cantidad</th>
@@ -349,7 +344,7 @@
                     <span class="required">*</span>
                 </label>
                 <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">
-                    Seleccione cómo desea que le contactemos cuando sus medicamentos estén listos para recoger.
+                    Seleccione cómo desea que le contactemos cuando sus productos estén listos para recoger.
                 </p>
 
                 <div class="contacto-options">
@@ -422,18 +417,62 @@
                     <div class="error-message" id="error-email"></div>
                 </div>
             </div>
+            <!-- Checkbox principal (oculto, se activa desde el modal) -->
+<div class="privacy-checkbox">
+    <input type="checkbox" id="aceptoPrivacidad" required style="display:none;">
+    <label>
+        <span id="estado-privacidad" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            font-size: 0.9em;
+            width: 100%;
+            box-sizing: border-box;
+        ">
+            ⚠️ Debe leer y aceptar la
+            <a href="#" id="abrirPrivacidad" style="color:#4CAF50; font-weight:600;">
+                política de privacidad
+            </a>
+            para continuar.
+        </span>
 
-            <!-- Checkbox de privacidad -->
+        <!-- Este span aparece cuando ya aceptó -->
+        <span id="estado-privacidad-ok" style="
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #d4edda;
+            border: 1px solid #4CAF50;
+            color: #155724;
+            font-size: 0.9em;
+            width: 100%;
+            box-sizing: border-box;
+        ">
+            ✅ Política de privacidad leída y aceptada.
+            <a href="#" id="releerPrivacidad" style="color:#4CAF50; font-size:0.85em;">
+                (releer)
+            </a>
+        </span>
+    </label>
+</div>
+<div class="error-message" id="error-privacidad"></div>
+            <!-- Checkbox de privacidad 1
             <div class="privacy-checkbox">
                 <input type="checkbox" id="aceptoPrivacidad" required>
                 <label for="aceptoPrivacidad">
-                    Acepto el uso de mis datos según la
-                    <a href="politica-privacidad.html" class="privacy-link" target="_blank">política de privacidad</a>.
-                    (Enlace a PDF explicativo del tratamiento de datos)
+                    El usuario declara haber sido informado de las condiciones sobre protección de datos personales y
+acepta el tratamiento de los mismos conforme a lo descrito en la presente <a href="Política de Privacidad App_17-03-26.pdf" class="privacy-link" target="_blank">política de privacidad</a>.
+
                 </label>
             </div>
-            <div class="error-message" id="error-privacidad"></div>
-
+            <div class="error-message" id="error-privacidad"></div>-->
             <!-- Botones del modal -->
             <div class="modal-buttons">
                 <button class="modal-button" id="modal-cancelar">Cancelar</button>
@@ -445,6 +484,60 @@
 <!-- Honeypot para bots (oculto) -->
 <div style="display: none !important; opacity: 0; position: absolute; left: -9999px;">
     <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
+<!-- Modal Política de Privacidad -->
+<div id="privacidadModal" class="modal">
+    <div class="modal-content" style="max-width:750px;">
+        <div class="modal-header">
+            <h2 class="modal-title">📄 Política de Privacidad</h2>
+        </div>
+
+        <p style="font-size:0.85em; color:#666; margin-bottom:10px;">
+            Por favor, desplácese hasta el final del documento para poder aceptar.
+        </p>
+
+        <!-- Contenedor del PDF con scroll -->
+        <div id="privacidadScrollContainer" style="
+            width: 100%;
+            height: 420px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        ">
+            <iframe
+                src="Política de Privacidad App_17-03-26.pdf"
+                style="width:100%; height:800px; border:none;"
+            ></iframe>
+        </div>
+
+        <!-- Aviso de scroll -->
+        <p id="aviso-scroll" style="
+            text-align:center;
+            color:#e67e22;
+            margin-top:12px;
+            font-size:0.9em;
+            transition: color 0.3s;
+        ">
+            ⬇️ Desplácese hasta el final para poder aceptar.
+        </p>
+
+        <!-- Checkbox dentro del modal -->
+        <div class="privacy-checkbox" style="margin-top:15px; opacity:0.4; pointer-events:none;" id="privacidad-check-container">
+            <input type="checkbox" id="aceptoPrivacidadModal">
+            <label for="aceptoPrivacidadModal">
+                El usuario declara haber sido informado de las condiciones sobre
+                protección de datos personales y acepta el tratamiento de los mismos
+                conforme a lo descrito en la presente política de privacidad.
+            </label>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="modal-button" id="cerrarPrivacidadBtn"
+                style="background:#ccc; color:white; cursor:not-allowed;" disabled>
+                Confirmar y cerrar
+            </button>
+        </div>
+    </div>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -542,10 +635,10 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
         nuevoMedicamentoDiv.setAttribute('data-medicamento-id', cont);
         nuevoMedicamentoDiv.innerHTML = `
             <div class='apartado' id="medicamento-${cont}">
-                <label><i class="fa fa-hiking"></i>Medicamento ${cont}</label>
+                <label><i class="fa fa-hiking"></i>Producto ${cont}</label>
                 <input placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
-                <p class="aviso">⚠️ Si pide un medicamento de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
-                Si no, no podremos entregarle el medicamento</p>
+                <p class="aviso">⚠️ Si pide un producto de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
+                Si no, no podremos entregarle el producto</p>
             </div>
 
            <!-- <div class='apartado' id="laboratorio-${cont}">
@@ -564,7 +657,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             </div>
 
             <button class='borrar-medicamento' data-medicamento="${cont}">
-                Borrar medicamento ${cont}
+                Borrar producto ${cont}
             </button>
         `;
 
@@ -591,7 +684,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
         botonBorrar.addEventListener('click', function() {
             const numeroMedicamento = this.getAttribute('data-medicamento');
 
-            if (confirm(`¿Está seguro de borrar el medicamento ${numeroMedicamento}?`)) {
+            if (confirm(`¿Está seguro de borrar el producto ${numeroMedicamento}?`)) {
                 nuevoMedicamentoDiv.parentNode.removeChild(nuevoMedicamentoDiv);
                 if (lineaSeparadora && lineaSeparadora.parentNode) {
                     lineaSeparadora.parentNode.removeChild(lineaSeparadora);
@@ -632,7 +725,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
 
             // Actualizar todos los IDs y names
             const elementos = [
-                { selector: `#medicamento-input-${index + 2}`, nuevoId: `medicamento-input-${nuevoNumero}`, nuevoName: `medicamento-${nuevoNumero}` },
+                { selector: `#medicamento-input-${nuevoNumero}`, nuevoId: `medicamento-input-${nuevoNumero}`, nuevoName: `producto-${nuevoNumero}` },
                 //{ selector: `#laboratorio-input-${index + 2}`, nuevoId: `laboratorio-input-${nuevoNumero}`, nuevoName: `laboratorio-${nuevoNumero}` },
                 { selector: `#dosis-input-${index + 2}`, nuevoId: `dosis-input-${nuevoNumero}`, nuevoName: `dosis-${nuevoNumero}` },
                 { selector: `#cantidad-input-${index + 2}`, nuevoId: `cantidad-input-${nuevoNumero}`, nuevoName: `cantidad-${nuevoNumero}` }
@@ -655,8 +748,8 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             // Actualizar labels de texto
             const labels = medicamentoDiv.querySelectorAll('label');
             labels.forEach(label => {
-                if (label.textContent.includes('Medicamento')) {
-                    label.innerHTML = `<i class="fa fa-hiking"></i>Medicamento ${nuevoNumero}`;
+                if (label.textContent.includes('Producto')) {
+                    label.innerHTML = `<i class="fa fa-hiking"></i>Producto ${nuevoNumero}`;
                 }
             });
 
@@ -664,12 +757,12 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             const botonBorrar = medicamentoDiv.querySelector('.borrar-medicamento');
             if (botonBorrar) {
                 botonBorrar.setAttribute('data-medicamento', nuevoNumero);
-                botonBorrar.textContent = `Borrar medicamento ${nuevoNumero}`;
+                botonBorrar.textContent = `Borrar producto ${nuevoNumero}`;
             }
         });
 
         // Actualizar cont para próximo medicamento
-        cont = medicamentosAgregados.length + 2;
+        cont = medicamentosAgregados.length + 1;
     }
 
     // ========== FUNCIÓN PARA MOSTRAR RESUMEN ==========
@@ -681,7 +774,7 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
             tablaResumen.innerHTML = `
                 <tr>
                     <td colspan="4" style="text-align: center; color: #999;">
-                        No hay medicamentos en el pedido
+                        No hay productos en el pedido
                     </td>
                 </tr>
             `;
@@ -909,7 +1002,7 @@ function obtenerDatosContacto() {
             emailInput.value = '';
             aceptoPrivacidad.checked = false;
         } else {
-            alert('Por favor, agregue al menos un medicamento antes de enviar el pedido.');
+            alert('Por favor, agregue al menos un producto antes de enviar el pedido.');
         }
     });
 
@@ -951,7 +1044,7 @@ function obtenerDatosContacto() {
             tablaResumen.innerHTML = `
                 <tr>
                     <td colspan="4" style="text-align: center; color: #999;">
-                        No hay medicamentos en el pedido
+                        No hay productos en el pedido
                     </td>
                 </tr>
             `;
@@ -1082,7 +1175,7 @@ function obtenerDatosContacto() {
 
             // Validar medicamentos
             if (medicamentos.length === 0) {
-                alert('Por favor, agregue al menos un medicamento.');
+                alert('Por favor, agregue al menos un producto.');
                 return;
             }
             // CREAR RESUMEN PARA EL USUARIO
@@ -1303,7 +1396,110 @@ function obtenerDatosContacto() {
         }
     });
 });
+// Pop up politica
+// ========== MODAL POLÍTICA DE PRIVACIDAD ==========
+const privacidadModal    = document.getElementById('privacidadModal');
+const abrirPrivacidad    = document.getElementById('abrirPrivacidad');
+const releerPrivacidad   = document.getElementById('releerPrivacidad');
+const cerrarPrivacidadBtn = document.getElementById('cerrarPrivacidadBtn');
+const aceptoPrivacidadModal = document.getElementById('aceptoPrivacidadModal');
+const privacidadScroll   = document.getElementById('privacidadScrollContainer');
+const avisoScroll        = document.getElementById('aviso-scroll');
+const checkContainer     = document.getElementById('privacidad-check-container');
+const estadoPrivacidad   = document.getElementById('estado-privacidad');
+const estadoPrivacidadOk = document.getElementById('estado-privacidad-ok');
 
+function abrirModalPrivacidad() {
+    privacidadModal.style.display = 'block';
+
+    // Resetear scroll y checkbox cada vez que se abre
+    privacidadScroll.scrollTop = 0;
+    aceptoPrivacidadModal.checked = false;
+    cerrarPrivacidadBtn.disabled = true;
+    cerrarPrivacidadBtn.style.background = '#ccc';
+    cerrarPrivacidadBtn.style.cursor = 'not-allowed';
+    checkContainer.style.opacity = '0.4';
+    checkContainer.style.pointerEvents = 'none';
+    avisoScroll.textContent = '⬇️ Desplácese hasta el final para poder aceptar.';
+    avisoScroll.style.color = '#e67e22';
+}
+
+// Abrir desde el enlace principal
+abrirPrivacidad.addEventListener('click', function(e) {
+    e.preventDefault();
+    abrirModalPrivacidad();
+});
+
+// Abrir desde "releer"
+if (releerPrivacidad) {
+    releerPrivacidad.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Resetear aceptación
+        aceptoPrivacidad.checked = false;
+        aceptoPrivacidad.dispatchEvent(new Event('change'));
+        estadoPrivacidad.style.display = 'inline-flex';
+        estadoPrivacidadOk.style.display = 'none';
+        abrirModalPrivacidad();
+    });
+}
+
+// Detectar cuando llega al final del scroll
+privacidadScroll.addEventListener('scroll', function() {
+    const margenFinal = 40; // píxeles de margen al final
+    const llegadoAlFinal =
+        this.scrollTop + this.clientHeight >= this.scrollHeight - margenFinal;
+
+    if (llegadoAlFinal) {
+        // Habilitar checkbox
+        checkContainer.style.opacity = '1';
+        checkContainer.style.pointerEvents = 'auto';
+        avisoScroll.textContent = '✅ Ya puede aceptar la política de privacidad.';
+        avisoScroll.style.color = '#4CAF50';
+    }
+});
+
+// Cuando marca el checkbox del modal
+aceptoPrivacidadModal.addEventListener('change', function() {
+    if (this.checked) {
+        cerrarPrivacidadBtn.disabled = false;
+        cerrarPrivacidadBtn.style.background = '#4CAF50';
+        cerrarPrivacidadBtn.style.cursor = 'pointer';
+    } else {
+        cerrarPrivacidadBtn.disabled = true;
+        cerrarPrivacidadBtn.style.background = '#ccc';
+        cerrarPrivacidadBtn.style.cursor = 'not-allowed';
+    }
+});
+
+// Confirmar y cerrar
+cerrarPrivacidadBtn.addEventListener('click', function() {
+    if (aceptoPrivacidadModal.checked) {
+        // Sincronizar con el checkbox principal (el que se manda a FastAPI)
+        aceptoPrivacidad.checked = true;
+
+        // Actualizar UI del modal principal
+        estadoPrivacidad.style.display = 'none';
+        estadoPrivacidadOk.style.display = 'inline-flex';
+
+        // Ocultar error si lo había
+        document.getElementById('error-privacidad').style.display = 'none';
+
+        // Cerrar modal
+        privacidadModal.style.display = 'none';
+    }
+});
+
+// Cerrar modal si se hace clic fuera (solo si ya aceptó)
+window.addEventListener('click', function(event) {
+    if (event.target === privacidadModal) {
+        if (aceptoPrivacidadModal.checked) {
+            privacidadModal.style.display = 'none';
+        } else {
+            avisoScroll.textContent = '⚠️ Debe leer y aceptar antes de cerrar.';
+            avisoScroll.style.color = '#f44336';
+        }
+    }
+});
 // Cookies necesarias para funcionalidad
 if (!localStorage.getItem('cookiesAceptadas')) {
     document.addEventListener('DOMContentLoaded', function() {
@@ -1324,7 +1520,7 @@ if (!localStorage.getItem('cookiesAceptadas')) {
             <button onclick="aceptarCookies()" style="margin-left: 10px; padding: 5px 15px; background: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
                 Aceptar
             </button>
-            <a href="/politica-privacidad" style="color: #4CAF50; margin-left: 10px;">Más info</a></p>
+            <a href="/Política de Privacidad App_17-03-26.pdf" style="color: #4CAF50; margin-left: 10px;">Más info</a></p>
         `;
         document.body.appendChild(banner);
     });
@@ -1335,5 +1531,6 @@ function aceptarCookies() {
     document.querySelector('div[style*="position: fixed; bottom: 0"]').remove();
 }
 </script>
+
 </body>
 </html>
