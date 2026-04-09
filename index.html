@@ -1251,8 +1251,8 @@ function obtenerDatosContacto() {
                 const identificador = resultado.identificador || resultado.referencia || '';
                 const mensajeExito = resultado.message || '✅ Pedido enviado correctamente.';
 
-                alert(`${mensajeExito}${identificador ? '\n\nSu identificador: ' + identificador : ''}`);
-
+                //alert(`${mensajeExito}${identificador ? '\n\nSu identificador: ' + identificador : ''}`);
+                alert(`${mensajeExito}\n\nLe mandaremos un email en los próximos minutos con el día y hora de recogida. Puede tardar hasta 30 minutos. Gracias por su paciencia y por confiar en nosotros.`);
                 // Cerrar modal
                 modal.style.display = 'none';
 
@@ -1283,7 +1283,7 @@ function obtenerDatosContacto() {
 
             } catch (error) {
                 console.error('❌ Error enviando pedido:', error);
-
+                alert('❌ Ha ocurrido un error por favor vuelva  aintentarlo en unos minutos')
                 // Intentar método alternativo si falla el fetch
                /** try {
                     console.log('🔄 Intentando método alternativo...');
