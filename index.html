@@ -420,7 +420,8 @@
             <!-- Checkbox principal (oculto, se activa desde el modal) -->
 <div class="privacy-checkbox">
     <input type="checkbox" id="aceptoPrivacidad" required style="display:none;">
-    <label>
+    <label for="aceptoPrivacidad">
+        <!-- Cuando no acepto-->
         <span id="estado-privacidad" style="
             display: inline-flex;
             align-items: center;
@@ -440,7 +441,6 @@
             </a>
             para continuar.
         </span>
-
         <!-- Este span aparece cuando ya aceptó -->
         <span id="estado-privacidad-ok" style="
             display: none;
