@@ -261,18 +261,36 @@
 
     .required {
         color: #f44336;
+    /* Código final probado */
+.contacto-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
-    @media (max-width: 768px) {
-    .contacto-options {
-        flex-direction: column;  /* Uno debajo del otro */
-        align-items: center;     /* Centrados verticalmente */
-        width: 100%;
-    }
+.contacto-option {
+    display: inline-flex;
+    align-items: center;
+    margin: 5px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
 
-    .contacto-option {
-        width: 80%;              /* Ancho en móvil */
-        max-width: 250px;       /* Máximo ancho */
-    }
+.contacto-option label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.contacto-option input[type="radio"] {
+    margin: 0 5px 0 0;
 }
     }
   </style>
