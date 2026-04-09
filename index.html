@@ -169,10 +169,12 @@
 **/
     /* Estilos para las opciones de contacto - Compatible con Safari */
 /* Versión ultra simple que funciona en todos lados */
+/* Estilos para las opciones de contacto - Compatible con Safari */
 .contacto-options {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     width: 100%;
 }
@@ -187,19 +189,32 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
+    background-color: white;
 }
 
 .contacto-option label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
     margin: 0;
     cursor: pointer;
+    color: #333;
 }
 
 .contacto-option input[type="radio"] {
     margin: 0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.contacto-option i {
+    font-size: 18px;
+}
+
+.contacto-option span {
+    font-size: 14px;
 }
 
 .contacto-option:hover {
@@ -211,6 +226,7 @@
     background-color: #f0fff0;
 }
 
+/* Para móvil (pantallas pequeñas) */
 @media (max-width: 600px) {
     .contacto-options {
         flex-direction: column;
