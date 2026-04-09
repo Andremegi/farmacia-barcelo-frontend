@@ -339,7 +339,7 @@
 
             <!-- Nueva sección de contacto -->
             <div class="modal-input-group">
-                <label for="medioContacto">
+                <label > <!-- for="medioContacto"-->
                     <i class="fa fa-bell"></i> ¿Qué medio prefiere para que le avisemos de que su pedido está listo?
                     <span class="required">*</span>
                 </label>
@@ -398,7 +398,7 @@
                 <!-- Detalles para Email -->
                 <div class="contacto-details" id="email-details">
                     <h4 style="margin-top: 0; color: #333;">Información para Email</h4>
-                    <input type="email" id="emailInput" placeholder="ejemplo@correo.com" style="width: 100%;">
+                    <input type="email" id="emailInput" name="email" placeholder="ejemplo@correo.com" style="width: 100%;">
 
                     <div class="email-suggestions">
                         <span style="font-size: 0.9em; color: #666; width: 100%; margin-bottom: 5px;">
@@ -634,32 +634,26 @@ console.log('🌐 URL API:', API_ENDPOINT);  // Para debug
         nuevoMedicamentoDiv.className = 'medicamento-agregado';
         nuevoMedicamentoDiv.setAttribute('data-medicamento-id', cont);
         nuevoMedicamentoDiv.innerHTML = `
-            <div class='apartado' id="medicamento-${cont}">
-                <label><i class="fa fa-hiking"></i>Producto ${cont}</label>
-                <input placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
-                <p class="aviso">⚠️ Si pide un producto de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
-                Si no, no podremos entregarle el producto</p>
-            </div>
+        <div class='apartado' id="medicamento-${cont}">
+            <label for="producto-${cont}"><i class="fa fa-hiking"></i>Producto ${cont}</label>
+            <input id="producto-${cont}" name="producto-${cont}" placeholder="Ej. Paracetamol/Arnica/Serum Vit C" required>
+            <p class="aviso">⚠️ Si pide un producto de prescripción o recomendación médica recuerde traerla cuando venga a recogerlo.
+            Si no, no podremos entregarle el producto</p>
+        </div>
 
-           <!-- <div class='apartado' id="laboratorio-${cont}">
-                <label><i class="fa fa-hiking"></i>Laboratorio o Marca</label>
-                <input placeholder="Ej. Cofares (Si no especifica cualquiera).">
-            </div>-->
+        <div class='apartado' id="dosis-${cont}">
+            <label for="dosis-${cont}"><i class="fa fa-hiking"></i>Dosis</label>
+            <input id="dosis-${cont}" name="dosis-${cont}" placeholder="Ej. 500mg/100mL" required>
+        </div>
 
-            <div class='apartado' id="dosis-${cont}">
-                <label><i class="fa fa-hiking"></i>Dosis</label>
-                <input placeholder="Ej. 500mg/100mL" required>
-            </div>
-
-            <div class='apartado' id="cantidad-${cont}">
-                <label><i class="fa fa-hiking"></i>Cantidad (Max 10)</label>
-                <input type="number" id="participants-${cont}" min="1" max="10" value="1" required>
-            </div>
-
-            <button class='borrar-medicamento' data-medicamento="${cont}">
-                Borrar producto ${cont}
-            </button>
-        `;
+        <div class='apartado' id="cantidad-${cont}">
+            <label for="cantidad-${cont}"><i class="fa fa-hiking"></i>Cantidad (Max 10)</label>
+            <input type="number" id="cantidad-${cont}" name="cantidad-${cont}" min="1" max="10" value="1" required>
+        </div>
+        <button class='borrar-medicamento' data-medicamento="${cont}">
+                        Borrar producto ${cont}
+                    </button>
+                `;
 
         // Estilo botón borrar
         const botonBorrar = nuevoMedicamentoDiv.querySelector('.borrar-medicamento');
