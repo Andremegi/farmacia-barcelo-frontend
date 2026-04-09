@@ -168,19 +168,21 @@
     }
 **/
     /* Estilos para las opciones de contacto - Compatible con Safari */
+/* Versión ultra simple que funciona en todos lados */
 .contacto-options {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    gap: 10px;
     width: 100%;
 }
 
 .contacto-option {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    margin: 5px;
-    padding: 10px 15px;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
@@ -189,16 +191,15 @@
 
 .contacto-option label {
     display: flex;
-    /*align-items: center;
-    gap: 5px;*/
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     margin: 0;
     cursor: pointer;
-    /*justify-content: center;*/
-    width: 100%;
 }
 
 .contacto-option input[type="radio"] {
-    margin: 0 5px 0 0;
+    margin: 0;
 }
 
 .contacto-option:hover {
@@ -210,7 +211,6 @@
     background-color: #f0fff0;
 }
 
-/* Para móvil (pantallas pequeñas) */
 @media (max-width: 600px) {
     .contacto-options {
         flex-direction: column;
@@ -218,14 +218,11 @@
     }
 
     .contacto-option {
-        width: auto;
-        min-width: 200px;
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
     }
-    .contacto-option input[type="radio"] {
-    margin: 0px;}
-
 }
-
 /* El resto de tus estilos (contacto-details, etc.) se quedan igual */
 .contacto-details {
     display: none;
