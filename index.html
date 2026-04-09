@@ -110,7 +110,7 @@
         box-sizing: border-box;
     }
 
-    /* Estilos para las opciones de contacto */
+    /* Estilos para las opciones de contacto
     .contacto-options {
         display: flex;
         flex-direction: row;
@@ -166,7 +166,117 @@
         display: block;
         animation: fadeIn 0.3s ease;
     }
+**/
+    /* Estilos para las opciones de contacto - Compatible con Safari */
+.contacto-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
+.contacto-option {
+    display: inline-flex;
+    align-items: center;
+    margin: 5px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.contacto-option label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.contacto-option input[type="radio"] {
+    margin: 0 5px 0 0;
+}
+
+.contacto-option:hover {
+    background-color: #f9f9f9;
+}
+
+.contacto-option.selected {
+    border-color: #4CAF50;
+    background-color: #f0fff0;
+}
+
+/* Para móvil (pantallas pequeñas) */
+@media (max-width: 600px) {
+    .contacto-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contacto-option {
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+/* El resto de tus estilos (contacto-details, etc.) se quedan igual */
+.contacto-details {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-left: 4px solid #4CAF50;
+}
+
+.contacto-details.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.phone-input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.country-select {
+    max-width: 30%;
+}
+
+.phone-input {
+    flex: 1;
+    max-width: 70%;
+}
+
+.email-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.email-suggestion-btn {
+    padding: 5px 10px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.email-suggestion-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -262,36 +372,7 @@
     .required {
         color: #f44336;
     /* Código final probado */
-.contacto-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
-.contacto-option {
-    display: inline-flex;
-    align-items: center;
-    margin: 5px;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.contacto-option label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 0;
-    cursor: pointer;
-}
-
-.contacto-option input[type="radio"] {
-    margin: 0 5px 0 0;
-}
     }
   </style>
 </head>
