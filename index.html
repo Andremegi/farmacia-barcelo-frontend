@@ -261,6 +261,19 @@
 
     .required {
         color: #f44336;
+
+    @media (max-width: 768px) {
+    .contacto-options {
+        flex-direction: column;  /* Uno debajo del otro */
+        align-items: center;     /* Centrados verticalmente */
+        width: 100%;
+    }
+
+    .contacto-option {
+        width: 80%;              /* Ancho en móvil */
+        max-width: 250px;       /* Máximo ancho */
+    }
+}
     }
   </style>
 </head>
