@@ -1,148 +1,260 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad - Farmacia Barceló</title>
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-        }
-        h1, h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
-        }
-        .header {
-            background: #4CAF50;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-        }
-        .info-box {
-            background: #f9f9f9;
-            border-left: 4px solid #4CAF50;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        .contacto {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 30px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad - Farmacia Barceló</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.92em;
+      color: #333;
+      line-height: 1.7;
+      background: #fff;
+      padding: 24px 20px 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25em;
+      font-weight: 800;
+      color: #2e7d32;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #4CAF50;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    strong {
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    /* Tabla de tratamientos */
+    .tabla-wrapper {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88em;
+      min-width: 520px;
+    }
+
+    thead tr {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    thead th {
+      padding: 11px 13px;
+      text-align: left;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9em;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f4faf4;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    tbody td {
+      padding: 10px 13px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+
+    /* Secciones */
+    .seccion {
+      margin-bottom: 18px;
+    }
+
+    .seccion-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95em;
+      font-weight: 700;
+      color: #2e7d32;
+      margin-bottom: 6px;
+    }
+
+    /* Lista de datos */
+    ul {
+      padding-left: 18px;
+      margin-bottom: 14px;
+    }
+
+    ul li {
+      margin-bottom: 4px;
+    }
+
+    /* Bloque final de declaración */
+    .declaracion {
+      margin-top: 24px;
+      padding: 16px;
+      background-color: #f0fff0;
+      border-left: 4px solid #4CAF50;
+      border-radius: 5px;
+      font-style: italic;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    /* Enlace AEPD */
+    a {
+      color: #4CAF50;
+      text-decoration: underline;
+    }
+
+    /* Responsive: en pantallas pequeñas la tabla tiene scroll horizontal */
+    @media (max-width: 480px) {
+      body { padding: 16px 14px 32px; }
+      h1 { font-size: 1.1em; }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🏥 Farmacia Barceló</h1>
-        <p><strong>Política de Privacidad y Protección de Datos</strong></p>
-        <p>Última actualización: Enero 2025</p>
-    </div>
 
-    <h2>1. Responsable del Tratamiento</h2>
-    <p><strong>Farmacia Barceló</strong><br>
-    Calle Mejia Lequerica 3, 28004 Madrid<br>
-    NIF: [TU NIF AQUÍ]<br>
-    Teléfono: 914482414<br>
-    Email: info@farmaciabarcelo.com</p>
+  <h1>Política de Privacidad — Aplicación QR</h1>
 
-    <h2>2. Finalidad del Tratamiento</h2>
-    <p>Tratamos sus datos exclusivamente para:</p>
-    <ul>
-        <li>Gestionar su pedido de medicamentos o productos sanitarios</li>
-        <li>Contactarle para notificarle cuando su pedido esté listo</li>
-        <li>Mantener un registro interno de pedidos (obligatorio por ley de farmacias)</li>
-        <li>Responder a sus consultas o reclamaciones</li>
-    </ul>
+  <p>
+    En cumplimiento de lo establecido en el <strong>Reglamento General de Protección de Datos 679/2016,
+    de 27 de abril (RGPD)</strong>, y la <strong>Ley 3/2018 de 5 de diciembre</strong>, de Protección de Datos
+    y Garantías de los derechos digitales, le informamos que:
+  </p>
 
-    <h2>3. Base Legal para el Tratamiento</h2>
-    <div class="info-box">
-        <p><strong>Artículo 6.1.b del RGPD:</strong> "Ejecución de un contrato o aplicación de medidas precontractuales"</p>
-        <p>Usted solicita un pedido, nosotros necesitamos sus datos para gestionarlo.</p>
-    </div>
-
-    <h2>4. Datos que Recogemos</h2>
-    <p><strong>Datos obligatorios:</strong></p>
-    <ul>
-        <li>Medio de contacto (email o número de WhatsApp)</li>
-        <li>Nombre de medicamento/producto solicitado</li>
-        <li>Aceptación de la política de privacidad</li>
-    </ul>
-
-    <p><strong>Datos opcionales:</strong></p>
-    <ul>
-        <li>Laboratorio o marca preferida</li>
-        <li>Dosis específica</li>
-    </ul>
-
-    <p><strong>IMPORTANTE:</strong> NO recogemos diagnósticos, historial médico, recetas ni información clínica sensible.</p>
-
-    <h2>5. Conservación de los Datos</h2>
-    <p>Conservaremos sus datos durante:</p>
-    <ul>
-        <li><strong>30 días</strong> después de que su pedido haya sido entregado o cancelado</li>
-        <li>Posteriormente, los datos serán anonimizados (eliminando contacto) pero manteniendo el registro de pedido para obligaciones legales de farmacia</li>
-        <li>Los registros de facturación se conservan 5 años según ley fiscal</li>
-    </ul>
-
-    <h2>6. Destinatarios de los Datos</h2>
-    <p><strong>NO cedemos sus datos a terceros</strong> excepto:</p>
-    <ul>
-        <li>Obligaciones legales (requerimiento judicial o autoridad sanitaria)</li>
-        <li>Google Workspace (proveedor de hoja de cálculo para gestión interna)</li>
-    </ul>
-
-    <h2>7. Sus Derechos</h2>
-    <p>Usted tiene derecho a:</p>
-    <ul>
-        <li><strong>Acceder</strong> a sus datos</li>
-        <li><strong>Rectificar</strong> datos incorrectos</li>
-        <li><strong>Suprimir</strong> sus datos (derecho al olvido)</li>
-        <li><strong>Limitar</strong> el tratamiento</li>
-        <li><strong>Oponerse</strong> al tratamiento</li>
-        <li><strong>Portabilidad</strong> de sus datos</li>
-    </ul>
-
-    <h2>8. Ejercer sus Derechos</h2>
-    <div class="contacto">
-        <p>Para ejercer cualquier derecho, contacte con:</p>
-        <p><strong>Email:</strong> info@farmaciabarcelo.com<br>
-        <strong>Por escrito:</strong> Farmacia Barceló, Calle Mejia Lequerica 3, 28004 Madrid<br>
-        <strong>En persona:</strong> En nuestra farmacia en horario de apertura</p>
-        <p>Debe acreditar su identidad (DNI o documento equivalente).</p>
-    </div>
-
-    <h2>9. Medidas de Seguridad</h2>
-    <p>Implementamos medidas técnicas y organizativas como:</p>
-    <ul>
-        <li>Conexión segura HTTPS (certificado SSL)</li>
-        <li>Acceso restringido a los datos (solo personal de la farmacia)</li>
-        <li>Registro de actividades de acceso</li>
-        <li>Copias de seguridad diarias</li>
-        <li>Anonimización automática tras 30 días</li>
-        <li>Encriptación de datos de contacto</li>
-    </ul>
-
-    <h2>10. Reclamaciones</h2>
-    <p>Si considera que sus derechos han sido vulnerados, puede presentar reclamación ante:</p>
-    <p><strong>Agencia Española de Protección de Datos (AEPD)</strong><br>
-    C/ Jorge Juan, 6, 28001 Madrid<br>
-    Teléfono: 901 100 099<br>
-    Web: <a href="https://www.aepd.es">www.aepd.es</a></p>
-
-    <h2>11. Cambios en la Política</h2>
-    <p>Nos reservamos el derecho a modificar esta política para adaptarla a cambios legislativos. Cualquier cambio será publicado en esta página.</p>
-
-    <hr>
-    <p style="text-align: center; color: #666; margin-top: 40px;">
-        Farmacia Barceló · Calle Mejia Lequerica 3, 28004 Madrid · 914482414
+  <div class="seccion">
+    <p class="seccion-titulo">Responsable del tratamiento</p>
+    <p>
+      <strong>FARMACIA RAQUEL MUÑOZ GONZALEZ</strong><br>
+      C/ MEJIA LEQUERICA, 3, 28004, Madrid.
     </p>
+  </div>
+
+  <div class="seccion">
+    <p>
+      Esta aplicación permite al usuario realizar encargos de productos farmacéuticos mediante el
+      escaneo de un código QR, con el fin de evitar esperas en el establecimiento y facilitar la
+      posterior recogida del pedido.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <p class="seccion-titulo">Datos personales tratados</p>
+    <ul>
+      <li><strong>Datos identificativos:</strong> nombre y número de teléfono.</li>
+      <li><strong>Datos del pedido:</strong> productos o medicamentos solicitados, cantidades y, opcionalmente, dosis y laboratorio.</li>
+    </ul>
+    <p>
+      El tratamiento de determinados datos relacionados con medicamentos puede implicar el tratamiento
+      de <strong>datos de salud</strong>, conforme a la normativa aplicable.
+    </p>
+  </div>
+
+  <!-- Tabla de tratamientos -->
+  <div class="tabla-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Datos tratados</th>
+          <th>Finalidad</th>
+          <th>Base de legitimación</th>
+          <th>Plazo de conservación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Identificativos y de contacto: nombre, email, teléfono y datos del producto.</td>
+          <td>Registrar y gestionar los encargos realizados a través del sistema QR para evitar esperas; informar sobre la disponibilidad del pedido y avisar cuando esté preparado para su recogida.</td>
+          <td>
+            Ejecución de la relación contractual o de medidas precontractuales (art. 6.1.b RGPD).<br><br>
+            Interés legítimo del responsable en garantizar un servicio eficiente (art. 6.1.f RGPD).
+          </td>
+          <td>Tiempo necesario para cumplir las finalidades. Una vez recogido el pedido, y transcurridos 30 días, los datos se eliminarán o anonimizarán. Pueden conservarse más tiempo por obligaciones legales o posibles reclamaciones.</td>
+        </tr>
+        <tr>
+          <td>Pedido: producto o medicamento.</td>
+          <td>Facilitar el proceso de dispensación del medicamento conforme a la normativa sanitaria, evitando esperas innecesarias. Facilitar el proceso de venta de productos farmacéuticos.</td>
+          <td>
+            Tratamiento necesario para fines de asistencia sanitaria (art. 9.2.h RGPD).<br><br>
+            Interés legítimo del responsable (art. 6.1.f RGPD).
+          </td>
+          <td>Tiempo necesario para cumplir las finalidades, los plazos legales aplicables y los necesarios para la defensa de reclamaciones.</td>
+        </tr>
+        <tr>
+          <td>Datos identificativos y de aceptación de la política.</td>
+          <td>Registrar la aceptación de la presente política de privacidad como evidencia del cumplimiento del deber de información.</td>
+          <td>Cumplimiento de obligaciones legales (art. 6.1.c RGPD).</td>
+          <td>Tiempo necesario para cumplir las finalidades, los plazos legales aplicables y los necesarios para la defensa de reclamaciones.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="seccion">
+    <p class="seccion-titulo">Confidencialidad de la información</p>
+    <p>
+      Trataremos la información facilitada de manera confidencial aplicando medidas de seguridad
+      organizativas y tecnológicas para preservar integridad, confidencialidad, disponibilidad
+      y recuperación de la misma.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <p class="seccion-titulo">Destinatarios de datos</p>
+    <p>
+      Los datos personales no serán comunicados a terceros, salvo obligación legal. Para la
+      prestación del servicio, podrán utilizarse herramientas tecnológicas de terceros, como
+      <strong>Google LLC</strong>, lo que puede implicar transferencias internacionales de datos.
+      En estos casos, se adoptarán las garantías adecuadas conforme al RGPD, como la suscripción
+      de cláusulas contractuales tipo aprobadas por la Comisión Europea.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <p class="seccion-titulo">Criterios de conservación de datos</p>
+    <p>
+      Los datos personales se conservarán durante el tiempo necesario para la gestión del pedido.
+      Posteriormente, durante un plazo máximo de <strong>30 días</strong> desde la recogida del pedido.
+      No obstante, podrán conservarse durante más tiempo cuando sea necesario para el cumplimiento
+      de obligaciones legales o para la formulación, ejercicio o defensa de posibles reclamaciones.
+    </p>
+  </div>
+
+  <div class="seccion">
+    <p class="seccion-titulo">Ejercicio de derechos</p>
+    <p>
+      Puede ejercer sus derechos de <strong>acceso, rectificación, supresión, portabilidad,
+      limitación, oposición y revocación del consentimiento</strong> cuando sea la base legítima
+      enviando un escrito al Responsable a la dirección:
+    </p>
+    <p>
+      C/ MEJIA LEQUERICA, 3, 28004, Madrid<br>
+      o enviando un email a: <a href="mailto:farmacraquel@hotmail.com">farmacraquel@hotmail.com</a>
+    </p>
+    <p>
+      Si considera vulnerados sus derechos puede interponer una reclamación ante la Autoridad
+      de Control en <a href="https://www.aepd.es" target="_blank">www.aepd.es</a>.
+    </p>
+  </div>
+
+  <div class="declaracion">
+    El usuario declara haber sido informado de las condiciones sobre protección de datos personales
+    y acepta el tratamiento de los mismos conforme a lo descrito en la presente política.
+  </div>
+
 </body>
 </html>
